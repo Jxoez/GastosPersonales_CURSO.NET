@@ -15,4 +15,8 @@
     <Folder Include="Temp\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GastosPersonales.Modelos\GastosPersonales.Modelos.csproj" />
+  </ItemGroup>
+
 </Project>

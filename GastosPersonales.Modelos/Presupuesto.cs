@@ -13,17 +13,17 @@ namespace GastosPersonales.Modelos
     {
         [Key]
         [Column("id_presupuesto")]
-        public int idPresupuesto;
+        public int idPresupuesto { get; set; }
 
         [Column("monto_limite",TypeName = "numeric(10,2)")]
         [Required]
-        public double montoLimite;
+        public double montoLimite { get; set; }
 
         [Required]
-        public int mes;
+        public int mes { get; set; }
 
         [Required]
-        public int anio;
+        public int anio { get; set; }
 
         [ForeignKey("Usuario")]
         [Required]

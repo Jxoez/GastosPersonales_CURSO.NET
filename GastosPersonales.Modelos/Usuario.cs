@@ -13,23 +13,23 @@ namespace GastosPersonales.Modelos
     {
         [Key]
         [Column("id_usuario")]
-        public int idUsuario;
+        public int idUsuario { get; set; }
         
         [Column(TypeName = "varchar(50)")]
         [Required]
-        public string nombre;
-        
+        public string nombre { get; set; }
+
         [Column(TypeName = "varchar(50)")]
         [Required]
-        public string apellido;
+        public string apellido { get; set; }
 
         [Column(TypeName = "varchar(10)")]
         [Required]
-        public string email;
+        public string email { get; set; }
 
         [Column(TypeName = "varchar(50)")]
         [Required]
-        public string password;
+        public string password { get; set; }
 
         // Relaciones
         public List<Presupuesto>? Presupuestos { get; set; } = new List<Presupuesto>();

@@ -12,23 +12,23 @@ namespace GastosPersonales.Modelos
     {
         [Key]
         [Column("id_movimiento")]
-        public int idMovimiento;
+        public int idMovimiento { get; set; }
 
         [Column(TypeName = "varchar(150)")]
         [Required]
-        public string descripcion;
+        public string descripcion { get; set; }
 
         [Column(TypeName = "numeric(10,2)")]
         [Required]
-        public double monto;
+        public double monto { get; set; }
 
         [Column(TypeName = "date")]
         [Required]
-        public DateOnly fecha;
+        public DateOnly fecha { get; set; }
 
         [Column(TypeName = "varchar(10)")]
         [Required]
-        public string tipo;
+        public string tipo { get; set; }
 
         [ForeignKey("Usuario")]
         [Required]

@@ -13,15 +13,15 @@ namespace GastosPersonales.Modelos
     {
         [Key]
         [Column("id_categoria")]
-        public int idCategoria;
+        public int idCategoria { get; set; }
 
         [Column(TypeName ="varchar(50)")]
         [Required]
-        public string nombre;
+        public string nombre { get; set; }
 
         [Column(TypeName = "varchar(10)")]
         [Required]
-        public string tipo;
+        public string tipo { get; set; }
 
         // Relaciones
         public List<Presupuesto>? Presupuestos { get; set; } = new List<Presupuesto>();
