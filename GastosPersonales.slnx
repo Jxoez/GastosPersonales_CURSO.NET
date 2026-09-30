@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="GastosPersonales.API/GastosPersonales.API.csproj" Id="5b18f340-2c7e-4226-975e-a80cdbd2358f" />
   <Project Path="GastosPersonales.Modelos/GastosPersonales.Modelos.csproj" />
 </Solution>

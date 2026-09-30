@@ -23,7 +23,8 @@ namespace GastosPersonales.Modelos
         [Required]
         public string tipo;
 
-
-
+        // Relaciones
+        public List<Presupuesto>? Presupuestos { get; set; } = new List<Presupuesto>();
+        public List<Movimiento>? Movimientos { get; set; } = new List<Movimiento>();
     }
 }
