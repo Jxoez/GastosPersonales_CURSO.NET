@@ -89,27 +89,33 @@
 
                     </ul>
 
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex align-items-center">
+
+                            <span class="navbar-text me-3">
+                                @User.Identity.Name
+                            </span>
+
+                            <form asp-controller="Account"
+                                  asp-action="Logout"
+                                  method="post"
+                                  class="d-inline">
+
+                                <button type="submit"
+                                        class="btn btn-outline-danger btn-sm">
+                                    Cerrar sesión
+                                </button>
+
+                            </form>
+
+                        </div>
+                    }
+
                 </div>
 
             </div>
-            @if (User.Identity != null && User.Identity.IsAuthenticated)
-            {
-                <span class="navbar-text me-3">
-                    Bienvenido, @User.Identity.Name
-                </span>
 
-                <form asp-controller="Account"
-                      asp-action="Logout"
-                      method="post"
-                      class="d-inline">
-
-                    <button type="submit"
-                            class="btn btn-outline-danger">
-                        Cerrar sesión
-                    </button>
-
-                </form>
-            }
         </nav>
     </header>
 

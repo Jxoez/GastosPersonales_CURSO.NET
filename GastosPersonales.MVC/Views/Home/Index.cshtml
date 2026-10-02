@@ -2,151 +2,163 @@
     ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center mb-4">
-    <h1 class="display-5 fw-bold">Gastos Personales</h1>
-    <p class="lead">
-        Administra tus ingresos, gastos y presupuestos de forma sencilla.
-    </p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Gastos Personales</h1>
+
+    <a asp-controller="Movimientos"
+       asp-action="Create"
+       class="btn btn-primary">
+        Nuevo Movimiento
+    </a>
 </div>
 
-<div class="row g-4 mb-4">
+<p class="text-muted mb-4">
+    Resumen de tus ingresos, gastos y presupuestos.
+</p>
 
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
 
-                <h5 class="card-title">Total de Ingresos</h5>
+<table class="table table-bordered table-hover mb-4">
 
-                <h2 class="text-success">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                Ingresos
+            </th>
+            <th>
+                Gastos
+            </th>
+            <th>
+                Balance
+            </th>
+            <th>
+                Movimientos
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                <span class="text-success fw-bold">
                     $ @ViewBag.Ingresos.ToString("F2")
-                </h2>
+                </span>
+            </td>
 
-                <p class="text-muted mb-0">
-                    Dinero registrado como ingreso
-                </p>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
-
-                <h5 class="card-title">Total de Gastos</h5>
-
-                <h2 class="text-danger">
+            <td>
+                <span class="text-danger fw-bold">
                     $ @ViewBag.Gastos.ToString("F2")
-                </h2>
+                </span>
+            </td>
 
-                <p class="text-muted mb-0">
-                    Dinero registrado como gasto
-                </p>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
-
-                <h5 class="card-title">Balance</h5>
-
-                <h2 class="@(ViewBag.Balance >= 0 ? "text-success" : "text-danger")">
+            <td>
+                <span class="@(ViewBag.Balance >= 0 ? "text-success" : "text-danger") fw-bold">
                     $ @ViewBag.Balance.ToString("F2")
-                </h2>
+                </span>
+            </td>
 
-                <p class="text-muted mb-0">
-                    Ingresos - Gastos
-                </p>
+            <td>
+                @ViewBag.CantidadMovimientos
+            </td>
+        </tr>
+    </tbody>
 
-            </div>
-        </div>
-    </div>
+</table>
 
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Accesos rápidos</h3>
 </div>
 
-<div class="card shadow-sm mb-4">
-    <div class="card-body text-center">
+<table class="table table-bordered table-hover">
 
-        <h5 class="card-title">Movimientos registrados</h5>
+    <thead class="table-dark">
+        <tr>
+            <th>
+                Sección
+            </th>
+            <th>
+                Descripción
+            </th>
+            <th>
+                Acción
+            </th>
+        </tr>
+    </thead>
 
-        <h2>@ViewBag.CantidadMovimientos</h2>
+    <tbody>
 
-        <p class="text-muted">
-            Total de ingresos y gastos registrados
-        </p>
+        <tr>
+            <td>
+                Mi perfil
+            </td>
 
-        <a asp-controller="Movimientos"
-           asp-action="Create"
-           class="btn btn-primary">
-            Registrar Movimiento
-        </a>
+            <td>
+                Consulta y modifica la información de tu cuenta.
+            </td>
 
-    </div>
-</div>
-
-<div class="row g-4">
-
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
-
-                <h5 class="card-title">Usuarios</h5>
-
-                <p class="card-text text-muted">
-                    Administra los usuarios registrados.
-                </p>
-
+            <td>
                 <a asp-controller="Usuarios"
                    asp-action="Index"
-                   class="btn btn-primary">
-                    Ver Usuarios
+                   class="btn btn-info btn-sm">
+                    Ver perfil
                 </a>
+            </td>
+        </tr>
 
-            </div>
-        </div>
-    </div>
+        <tr>
+            <td>
+                Categorías
+            </td>
 
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
+            <td>
+                Consulta y administra las categorías de tus movimientos.
+            </td>
 
-                <h5 class="card-title">Categorías</h5>
-
-                <p class="card-text text-muted">
-                    Organiza tus ingresos y gastos.
-                </p>
-
+            <td>
                 <a asp-controller="Categorias"
                    asp-action="Index"
-                   class="btn btn-primary">
-                    Ver Categorías
+                   class="btn btn-info btn-sm">
+                    Ver categorías
                 </a>
+            </td>
+        </tr>
 
-            </div>
-        </div>
-    </div>
+        <tr>
+            <td>
+                Movimientos
+            </td>
 
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body text-center">
+            <td>
+                Consulta tus ingresos y gastos registrados.
+            </td>
 
-                <h5 class="card-title">Presupuestos</h5>
+            <td>
+                <a asp-controller="Movimientos"
+                   asp-action="Index"
+                   class="btn btn-info btn-sm">
+                    Ver movimientos
+                </a>
+            </td>
+        </tr>
 
-                <p class="card-text text-muted">
-                    Define límites de gasto por categoría.
-                </p>
+        <tr>
+            <td>
+                Presupuestos
+            </td>
 
+            <td>
+                Consulta y administra tus límites de gasto.
+            </td>
+
+            <td>
                 <a asp-controller="Presupuestos"
                    asp-action="Index"
-                   class="btn btn-primary">
-                    Ver Presupuestos
+                   class="btn btn-info btn-sm">
+                    Ver presupuestos
                 </a>
+            </td>
+        </tr>
 
-            </div>
-        </div>
-    </div>
+    </tbody>
 
-</div>
+</table>
