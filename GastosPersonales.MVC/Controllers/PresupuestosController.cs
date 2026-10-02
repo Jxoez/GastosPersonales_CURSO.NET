@@ -1,7 +1,8 @@
 
-using Microsoft.AspNetCore.Mvc;
-using GastosPersonales.Modelos;
 using GastosPersonales.Consumer;
+using GastosPersonales.Modelos;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class PresupuestosController : Controller
 {
@@ -26,9 +27,33 @@ public class PresupuestosController : Controller
         return View(presupuesto);
     }
 
+    // Metodo interno para obtener usuarios
+    private List<SelectListItem> GetUsuarios()
+    {
+        var usuarios = CRUD<Usuario>.GetAll();
+        return usuarios.Select(u => new SelectListItem
+        {
+            Value = u.idUsuario.ToString(),
+            Text = u.nombre + " " + u.apellido
+        }).ToList();
+    }
+
+    // Metodo interno para obtener categorias
+    private List<SelectListItem> GetCategorias()
+    {
+        var categorias = CRUD<Categoria>.GetAll();
+        return categorias.Select(c => new SelectListItem
+        {
+            Value = c.idCategoria.ToString(),
+            Text = c.nombre
+        }).ToList();
+    }
+
     // GET: PRESUPUESTOS/Create
     public ActionResult Create()
     {
+        ViewBag.Usuarios = GetUsuarios();
+        ViewBag.Categorias = GetCategorias();
         return View();
     }
 
@@ -55,12 +80,16 @@ public class PresupuestosController : Controller
     public ActionResult Edit(int idpresupuesto)
     {
         var presupuesto = CRUD<Presupuesto>.GetById(idpresupuesto);
+        ViewBag.Usuarios = GetUsuarios();
+        ViewBag.Categorias = GetCategorias();
         if (presupuesto == null)
         {
             return NotFound();
         }
         return View(presupuesto);
     }
+
+    
 
     // POST: PRESUPUESTOS/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.

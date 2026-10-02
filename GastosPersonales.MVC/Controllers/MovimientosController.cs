@@ -1,7 +1,9 @@
 
-using Microsoft.AspNetCore.Mvc;
-using GastosPersonales.Modelos;
 using GastosPersonales.Consumer;
+using GastosPersonales.Modelos;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 
 public class MovimientosController : Controller
 {
@@ -24,9 +26,33 @@ public class MovimientosController : Controller
         return View(movimiento);
     }
 
+    // Metodo interno para obtener usuarios
+    private List<SelectListItem> GetUsuarios()
+    {
+        var usuarios = CRUD<Usuario>.GetAll();
+        return usuarios.Select(u => new SelectListItem
+        {
+            Value = u.idUsuario.ToString(),
+            Text = u.nombre + " " + u.apellido
+        }).ToList();
+    }
+
+    // Metodo interno para obtener categorias
+    private List<SelectListItem> GetCategorias()
+    {
+        var categorias = CRUD<Categoria>.GetAll();
+        return categorias.Select(c => new SelectListItem
+        {
+            Value = c.idCategoria.ToString(),
+            Text = c.nombre
+        }).ToList();
+    }
+
     // GET: MOVIMIENTOS/Create
     public ActionResult Create()
     {
+        ViewBag.Usuarios = GetUsuarios();
+        ViewBag.Categorias = GetCategorias();
         return View();
     }
 
@@ -53,6 +79,8 @@ public class MovimientosController : Controller
     public ActionResult Edit(int idmovimiento)
     {
         var movimiento = CRUD<Movimiento>.GetById(idmovimiento);
+        ViewBag.Usuarios = GetUsuarios();
+        ViewBag.Categorias = GetCategorias();
         if (movimiento == null)
         {
             return NotFound();

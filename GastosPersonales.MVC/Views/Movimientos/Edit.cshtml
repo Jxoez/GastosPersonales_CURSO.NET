@@ -8,55 +8,62 @@
 
 <h4>Movimiento</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
+
         <form asp-action="Edit">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <input type="hidden" asp-for="idMovimiento" />
+
             <div class="form-group">
                 <label asp-for="descripcion" class="control-label"></label>
                 <input asp-for="descripcion" class="form-control" />
                 <span asp-validation-for="descripcion" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="monto" class="control-label"></label>
                 <input asp-for="monto" class="form-control" />
                 <span asp-validation-for="monto" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="fecha" class="control-label"></label>
-                <input asp-for="fecha" class="form-control" />
+                <input asp-for="fecha" type="date" class="form-control" />
                 <span asp-validation-for="fecha" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="tipo" class="control-label"></label>
                 <input asp-for="tipo" class="form-control" />
                 <span asp-validation-for="tipo" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="idUsuario" class="control-label"></label>
-                <input asp-for="idUsuario" class="form-control" />
+                <label asp-for="idUsuario" class="control-label">Usuario</label>
+                <select asp-for="idUsuario" class="form-control" asp-items="ViewBag.Usuarios">
+                    <option value="">-- Seleccione Usuario --</option>
+                </select>
                 <span asp-validation-for="idUsuario" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="idCategoria" class="control-label"></label>
-                <input asp-for="idCategoria" class="form-control" />
+                <label asp-for="idCategoria" class="control-label">Categoría</label>
+                <select asp-for="idCategoria" class="form-control" asp-items="ViewBag.Categorias">
+                    <option value="">-- Seleccione Categoría --</option>
+                </select>
                 <span asp-validation-for="idCategoria" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Usuario" class="control-label"></label>
-                <input asp-for="Usuario" class="form-control" />
-                <span asp-validation-for="Usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
-                <span asp-validation-for="Categoria" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
         </form>
+
     </div>
 </div>
 

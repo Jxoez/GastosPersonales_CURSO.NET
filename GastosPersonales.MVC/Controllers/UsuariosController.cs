@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GastosPersonales.Modelos;
 using GastosPersonales.Consumer;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class UsuariosController : Controller
 {
@@ -22,6 +23,8 @@ public class UsuariosController : Controller
         }
         return View(usuario);
     }
+
+    
 
     // GET: USUARIOS/Create
     public ActionResult Create()
