@@ -16,14 +16,21 @@ public class CategoriasController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoria()
     {
-        return await _context.Categoria.ToListAsync();
+        var categorias = await _context.Categoria.
+            Include(c => c.Presupuestos).
+            Include(c => c.Movimientos)
+            .ToListAsync();
+        return categorias
     }
 
     // GET: api/Categoria/5
     [HttpGet("{idcategoria}")]
     public async Task<ActionResult<Categoria>> GetCategoria(int idcategoria)
     {
-        var categoria = await _context.Categoria.FindAsync(idcategoria);
+        var categoria = await _context.Categoria.
+            Include(c => c.Presupuestos).
+            Include(c => c.Movimientos)
+            .FirstOrDefaultAsync(c => c.idCategoria == idcategoria);
 
         if (categoria == null)
         {

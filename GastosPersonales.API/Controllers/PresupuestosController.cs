@@ -16,14 +16,21 @@ public class PresupuestosController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Presupuesto>>> GetPresupuesto()
     {
-        return await _context.Presupuesto.ToListAsync();
+        var presupuestos = await _context.Presupuesto.
+            Include(c => c.Usuario).
+            Include(b => b.Categoria).
+            ToListAsync();
+        return presupuestos
     }
 
     // GET: api/Presupuesto/5
     [HttpGet("{idpresupuesto}")]
     public async Task<ActionResult<Presupuesto>> GetPresupuesto(int idpresupuesto)
     {
-        var presupuesto = await _context.Presupuesto.FindAsync(idpresupuesto);
+        var presupuesto = await _context.Presupuesto.
+            Include(c => c.Usuario).
+            Include(b => b.Categoria).
+            FirstOrDefaultAsync(c => c.idPresupuesto == idpresupuesto);
 
         if (presupuesto == null)
         {
