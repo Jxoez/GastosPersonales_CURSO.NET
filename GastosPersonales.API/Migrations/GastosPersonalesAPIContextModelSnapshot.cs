@@ -130,7 +130,7 @@ namespace GastosPersonales.API.Migrations
 
                     b.Property<string>("email")
                         .IsRequired()
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("nombre")
                         .IsRequired()

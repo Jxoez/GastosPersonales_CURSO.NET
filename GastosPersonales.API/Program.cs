@@ -5,7 +5,10 @@ var connectionString = builder.Configuration.GetConnectionString("Postgres") ?? 
 builder.Services.AddDbContext<GastosPersonalesAPIContext>(options => options.UseNpgsql(connectionString));
 
 // Add services to the container.
-
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GastosPersonales.API.Migrations
 {
     [DbContext(typeof(GastosPersonalesAPIContext))]
-    [Migration("20260930234439_V01")]
-    partial class V01
+    [Migration("20261002050241_V03")]
+    partial class V03
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,7 +133,7 @@ namespace GastosPersonales.API.Migrations
 
                     b.Property<string>("email")
                         .IsRequired()
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("nombre")
                         .IsRequired()

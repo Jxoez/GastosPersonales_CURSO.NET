@@ -16,14 +16,22 @@ public class MovimientosController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Movimiento>>> GetMovimiento()
     {
-        return await _context.Movimiento.ToListAsync();
+        var movimientos = await _context.Movimiento.
+            Include(c => c.Usuario).
+            Include(b => b.Categoria).
+            ToListAsync();
+
+        return movimientos;
     }
 
     // GET: api/Movimiento/5
     [HttpGet("{idmovimiento}")]
     public async Task<ActionResult<Movimiento>> GetMovimiento(int idmovimiento)
     {
-        var movimiento = await _context.Movimiento.FindAsync(idmovimiento);
+        var movimiento = await _context.Movimiento.
+            Include(c => c.Usuario).
+            Include(b => b.Categoria).
+            FirstOrDefaultAsync(c => c.idMovimiento == idmovimiento);
 
         if (movimiento == null)
         {

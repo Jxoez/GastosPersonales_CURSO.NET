@@ -31,9 +31,9 @@ namespace GastosPersonales.Consumer
 
         public static T GetById(int id)
         {
-            using (var cliente = new HttpClient())
+            using (var usuario = new HttpClient())
             {
-                var response = cliente.GetAsync($"{Endpoint}/{id}").Result;
+                var response = usuario.GetAsync($"{Endpoint}/{id}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var json = response.Content.ReadAsStringAsync().Result;
@@ -46,7 +46,7 @@ namespace GastosPersonales.Consumer
             }
         }
 
-        public static T Create(T item)
+        public static T Create(T? item)
         {
             using (var cliente = new HttpClient())
             {

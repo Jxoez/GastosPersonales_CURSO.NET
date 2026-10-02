@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GastosPersonales.API.Migrations
 {
     /// <inheritdoc />
-    public partial class V01 : Migration
+    public partial class V03 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace GastosPersonales.API.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nombre = table.Column<string>(type: "varchar(50)", nullable: false),
                     apellido = table.Column<string>(type: "varchar(50)", nullable: false),
-                    email = table.Column<string>(type: "varchar(10)", nullable: false),
+                    email = table.Column<string>(type: "varchar(50)", nullable: false),
                     password = table.Column<string>(type: "varchar(50)", nullable: false)
                 },
                 constraints: table =>
