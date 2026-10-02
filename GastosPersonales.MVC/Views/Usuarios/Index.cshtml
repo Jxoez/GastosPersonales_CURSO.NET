@@ -1,15 +1,11 @@
 @model IEnumerable<GastosPersonales.Modelos.Usuario>
 
 @{
-    ViewData["Title"] = "Usuarios";
+    ViewData["Title"] = "Mi perfil";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>Usuarios</h1>
-
-    <a asp-action="Create" class="btn btn-primary">
-        Nuevo Usuario
-    </a>
+    <h1>Mi perfil</h1>
 </div>
 
 <table class="table table-bordered table-hover">
@@ -65,12 +61,6 @@
                        asp-route-idusuario="@item.idUsuario"
                        class="btn btn-info btn-sm">
                         Detalles
-                    </a>
-
-                    <a asp-action="Delete"
-                       asp-route-idusuario="@item.idUsuario"
-                       class="btn btn-danger btn-sm">
-                        Eliminar
                     </a>
                 </td>
             </tr>

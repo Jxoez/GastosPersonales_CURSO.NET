@@ -1,6 +1,7 @@
+using GastosPersonales.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GastosPersonales.Modelos;
+using System.Security.Claims;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -10,6 +11,14 @@ public class MovimientosController : ControllerBase
     public MovimientosController(GastosPersonalesAPIContext context)
     {
         _context = context;
+    }
+
+    // Metodo interno para obtener el usuario actual
+    private int GetUsuarioActual()
+    {
+        return int.Parse(
+            User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+        );
     }
 
     // GET: api/Movimiento

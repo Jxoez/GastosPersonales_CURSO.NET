@@ -1,9 +1,10 @@
 using GastosPersonales.Consumer;
 using GastosPersonales.Modelos;
 using GastosPersonales.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 namespace GastosPersonales.MVC.Controllers
@@ -17,10 +18,23 @@ namespace GastosPersonales.MVC.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        
+        // Metodo interno para obtener el usuario actual
+        private int GetUsuarioActual()
         {
+            return int.Parse(
+                User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+            );
+        }
+
+        public IActionResult Index() { 
+        
+            int idUsuario = GetUsuarioActual();
+
             var movimientos = CRUD<Movimiento>.GetAll();
+            movimientos = movimientos
+            .Where(m => m.idUsuario == idUsuario)
+            .ToList();
 
             double ingresos = movimientos
                 .Where(m => m.tipo == "Ingreso")

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 [Authorize]
 public class MovimientosController : Controller
@@ -13,30 +14,32 @@ public class MovimientosController : Controller
     // GET: MOVIMIENTOS
     public ActionResult Index()    
     {
+        int idUsuario = GetUsuarioActual();
+
         var movimientos = CRUD<Movimiento>.GetAll();
+        movimientos = movimientos
+        .Where(m => m.idUsuario == idUsuario)
+        .ToList();
+
         return View(movimientos);
     }
 
     // GET: MOVIMIENTOS/Details/5
     public ActionResult Details(int idmovimiento)
     {
+        int idUsuario = GetUsuarioActual();
+
         var movimiento = CRUD<Movimiento>.GetById(idmovimiento);
         if (movimiento == null)
         {
             return NotFound();
         }
-        return View(movimiento);
-    }
 
-    // Metodo interno para obtener usuarios
-    private List<SelectListItem> GetUsuarios()
-    {
-        var usuarios = CRUD<Usuario>.GetAll();
-        return usuarios.Select(u => new SelectListItem
+        if (movimiento.idUsuario != idUsuario)
         {
-            Value = u.idUsuario.ToString(),
-            Text = u.nombre + " " + u.apellido
-        }).ToList();
+            return Forbid();
+        }
+        return View(movimiento);
     }
 
     // Metodo interno para obtener categorias
@@ -50,10 +53,17 @@ public class MovimientosController : Controller
         }).ToList();
     }
 
+    // Metodo para obtener al usuario actual
+    private int GetUsuarioActual()
+    {
+        return int.Parse(
+            User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+        );
+    }
+
     // GET: MOVIMIENTOS/Create
     public ActionResult Create()
     {
-        ViewBag.Usuarios = GetUsuarios();
         ViewBag.Categorias = GetCategorias();
         return View();
     }
@@ -67,12 +77,15 @@ public class MovimientosController : Controller
     {
         try
         {
+            movimiento.idUsuario = GetUsuarioActual();
+
             CRUD<Movimiento>.Create(movimiento);
+
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError("",ex.Message);
+            ModelState.AddModelError("", ex.Message);
             return View(movimiento);
         }
     }
@@ -80,13 +93,21 @@ public class MovimientosController : Controller
     // GET: MOVIMIENTOS/Edit/5
     public ActionResult Edit(int idmovimiento)
     {
+        int idUsuario = GetUsuarioActual();
+
         var movimiento = CRUD<Movimiento>.GetById(idmovimiento);
-        ViewBag.Usuarios = GetUsuarios();
-        ViewBag.Categorias = GetCategorias();
+        
         if (movimiento == null)
         {
             return NotFound();
         }
+
+        if (movimiento.idUsuario != idUsuario)
+        {
+            return Forbid();
+        }
+
+        ViewBag.Categorias = GetCategorias();
         return View(movimiento);
     }
 
@@ -99,6 +120,24 @@ public class MovimientosController : Controller
     {
         try
         {
+            int idUsuario = GetUsuarioActual();
+
+            var movimientoExistente =
+                CRUD<Movimiento>.GetById(idmovimiento);
+
+            if (movimientoExistente == null)
+            {
+                return NotFound();
+            }
+
+            if (movimientoExistente.idUsuario != idUsuario)
+            {
+                return Forbid();
+            }
+
+            movimiento.idMovimiento = idmovimiento;
+            movimiento.idUsuario = idUsuario;
+
             CRUD<Movimiento>.Update(idmovimiento, movimiento);
             return RedirectToAction(nameof(Index));
         }
@@ -112,10 +151,16 @@ public class MovimientosController : Controller
     // GET: MOVIMIENTOS/Delete/5
     public ActionResult Delete(int idmovimiento)
     {
+        int idUsuario = GetUsuarioActual();
         var movimiento = CRUD<Movimiento>.GetById(idmovimiento);
         if (movimiento == null)
         {
             return NotFound();
+        }
+
+        if (movimiento.idUsuario != idUsuario)
+        {
+            return Forbid();
         }
         return View(movimiento);
     }
@@ -127,6 +172,21 @@ public class MovimientosController : Controller
     {
         try
         {
+            int idUsuario = GetUsuarioActual();
+
+            var movimientoExistente =
+                CRUD<Movimiento>.GetById(idmovimiento);
+
+            if (movimientoExistente == null)
+            {
+                return NotFound();
+            }
+
+            if (movimientoExistente.idUsuario != idUsuario)
+            {
+                return Forbid();
+            }
+
             CRUD<Movimiento>.Delete(idmovimiento);
             return RedirectToAction(nameof(Index));
         }
