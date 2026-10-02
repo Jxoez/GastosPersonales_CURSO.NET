@@ -20,7 +20,7 @@ public class CategoriasController : ControllerBase
             Include(c => c.Presupuestos).
             Include(c => c.Movimientos)
             .ToListAsync();
-        return categorias
+        return categorias;
     }
 
     // GET: api/Categoria/5
