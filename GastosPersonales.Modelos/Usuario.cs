@@ -27,7 +27,7 @@ namespace GastosPersonales.Modelos
         [Required]
         public string email { get; set; }
 
-        [Column(TypeName = "varchar(50)")]
+        [Column(TypeName = "varchar(100)")]
         [Required]
         public string password { get; set; }
 

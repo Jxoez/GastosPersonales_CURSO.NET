@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GastosPersonales.Consumer\GastosPersonales.Consumer.csproj" />
     <ProjectReference Include="..\GastosPersonales.Modelos\GastosPersonales.Modelos.csproj" />
+    <ProjectReference Include="..\GastosPersonales.Servicios\GastosPersonales.Servicios.csproj" />
   </ItemGroup>
 
   <ItemGroup>

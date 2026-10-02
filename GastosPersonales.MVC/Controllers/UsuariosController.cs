@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using GastosPersonales.Modelos;
 using GastosPersonales.Consumer;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class UsuariosController : Controller
 {
     // GET: USUARIOS

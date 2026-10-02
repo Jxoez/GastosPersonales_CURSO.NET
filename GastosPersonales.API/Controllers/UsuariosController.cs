@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GastosPersonales.Modelos;
 
+
 [Route("api/[controller]")]
 [ApiController]
 public class UsuariosController : ControllerBase
@@ -50,23 +51,22 @@ public class UsuariosController : ControllerBase
             return BadRequest();
         }
 
-        _context.Entry(usuario).State = EntityState.Modified;
+        var usuarioExistente = await _context.Usuario.FindAsync(idusuario);
+        if (usuarioExistente == null)
+        {
+            return NotFound();
+        }
 
-        try
+        usuarioExistente.nombre = usuario.nombre;
+        usuarioExistente.apellido = usuario.apellido;
+        usuarioExistente.email = usuario.email;
+
+        if (!string.IsNullOrEmpty(usuario.password))
         {
-            await _context.SaveChangesAsync();
+            usuarioExistente.password = BCrypt.Net.BCrypt.HashPassword(usuario.password);
         }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!UsuarioExists(idusuario))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+
+        await _context.SaveChangesAsync();
 
         return NoContent();
     }
@@ -76,10 +76,26 @@ public class UsuariosController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
     {
+        var existe = await _context.Usuario.AnyAsync(
+            u => u.email.ToLower() == usuario.email.ToLower()
+        );
+
+        if (existe)
+        {
+            return Conflict("El correo electrónico ya está registrado.");
+        }
+
+        usuario.password = BCrypt.Net.BCrypt.HashPassword(usuario.password);
+
         _context.Usuario.Add(usuario);
+
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetUsuario", new { idusuario = usuario.idUsuario }, usuario);
+        return CreatedAtAction(
+            nameof(GetUsuario),
+            new { idusuario = usuario.idUsuario },
+            usuario
+        );
     }
 
     // DELETE: api/Usuario/5
@@ -98,8 +114,4 @@ public class UsuariosController : ControllerBase
         return NoContent();
     }
 
-    private bool UsuarioExists(int? idusuario)
-    {
-        return _context.Usuario.Any(e => e.idUsuario == idusuario);
-    }
 }

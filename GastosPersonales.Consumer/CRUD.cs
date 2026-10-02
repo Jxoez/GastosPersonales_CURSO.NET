@@ -60,7 +60,11 @@ namespace GastosPersonales.Consumer
                 }
                 else
                 {
-                    throw new Exception($"Error: {response.StatusCode} ");
+                    var error = response.Content.ReadAsStringAsync().Result;
+
+                    throw new Exception(
+                        $"Error: {response.StatusCode}\nMensaje: {error}"
+                    );
                 }
             }
         }

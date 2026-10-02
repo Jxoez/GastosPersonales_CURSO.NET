@@ -3,7 +3,9 @@ using GastosPersonales.Consumer;
 using GastosPersonales.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class PresupuestosController : Controller
 {
 

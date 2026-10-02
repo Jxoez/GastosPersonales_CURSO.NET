@@ -1,6 +1,8 @@
 using GastosPersonales.Consumer;
 using GastosPersonales.Modelos;
 using Microsoft.EntityFrameworkCore;
+using GastosPersonales.Servicios.Interfaces;
+using GastosPersonales.Servicios;
 
 CRUD<Categoria>.Endpoint = "https://localhost:7292/api/Categorias";
 CRUD<Movimiento>.Endpoint = "https://localhost:7292/api/Movimientos";
@@ -16,6 +18,14 @@ builder.Services.AddDbContext<GastosPersonalesAPIContext>(options => options.Use
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Account/Index";
+    });
 
 var app = builder.Build();
 
@@ -31,11 +41,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 app.Run();

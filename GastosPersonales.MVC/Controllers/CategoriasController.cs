@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using GastosPersonales.Modelos;
 using GastosPersonales.Consumer;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class CategoriasController : Controller
 {
    
