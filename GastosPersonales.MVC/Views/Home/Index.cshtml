@@ -1,8 +1,152 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-4">
+    <h1 class="display-5 fw-bold">Gastos Personales</h1>
+    <p class="lead">
+        Administra tus ingresos, gastos y presupuestos de forma sencilla.
+    </p>
+</div>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Total de Ingresos</h5>
+
+                <h2 class="text-success">
+                    $ @ViewBag.Ingresos.ToString("F2")
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Dinero registrado como ingreso
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Total de Gastos</h5>
+
+                <h2 class="text-danger">
+                    $ @ViewBag.Gastos.ToString("F2")
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Dinero registrado como gasto
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Balance</h5>
+
+                <h2 class="@(ViewBag.Balance >= 0 ? "text-success" : "text-danger")">
+                    $ @ViewBag.Balance.ToString("F2")
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Ingresos - Gastos
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body text-center">
+
+        <h5 class="card-title">Movimientos registrados</h5>
+
+        <h2>@ViewBag.CantidadMovimientos</h2>
+
+        <p class="text-muted">
+            Total de ingresos y gastos registrados
+        </p>
+
+        <a asp-controller="Movimientos"
+           asp-action="Create"
+           class="btn btn-primary">
+            Registrar Movimiento
+        </a>
+
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Usuarios</h5>
+
+                <p class="card-text text-muted">
+                    Administra los usuarios registrados.
+                </p>
+
+                <a asp-controller="Usuarios"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Ver Usuarios
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Categorías</h5>
+
+                <p class="card-text text-muted">
+                    Organiza tus ingresos y gastos.
+                </p>
+
+                <a asp-controller="Categorias"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Ver Categorías
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+
+                <h5 class="card-title">Presupuestos</h5>
+
+                <p class="card-text text-muted">
+                    Define límites de gasto por categoría.
+                </p>
+
+                <a asp-controller="Presupuestos"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Ver Presupuestos
+                </a>
+
+            </div>
+        </div>
+    </div>
+
 </div>

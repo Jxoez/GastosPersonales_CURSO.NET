@@ -1,65 +1,84 @@
 @model GastosPersonales.Modelos.Movimiento
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Movimiento";
 }
 
-<h1>Create</h1>
+<h1>Crear Movimiento</h1>
 
-<h4>Movimiento</h4>
+<h4>Nuevo Movimiento</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
+
         <form asp-action="Create">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="descripcion" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="descripcion" class="control-label">Descripción</label>
                 <input asp-for="descripcion" class="form-control" />
                 <span asp-validation-for="descripcion" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="monto" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="monto" class="control-label">Monto</label>
                 <input asp-for="monto" class="form-control" />
                 <span asp-validation-for="monto" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="fecha" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="fecha" class="control-label">Fecha</label>
                 <input asp-for="fecha" type="date" class="form-control" />
                 <span asp-validation-for="fecha" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="tipo" class="control-label"></label>
-                <input asp-for="tipo" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="tipo" class="control-label">Tipo</label>
+
+                <select asp-for="tipo" class="form-control">
+                    <option value="">-- Seleccione el Tipo --</option>
+                    <option value="Gasto">Gasto</option>
+                    <option value="Ingreso">Ingreso</option>
+                </select>
+
                 <span asp-validation-for="tipo" class="text-danger"></span>
             </div>
 
-
-             <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="idUsuario" class="control-label">Usuario</label>
+
                 <select asp-for="idUsuario" class="form-control" asp-items="ViewBag.Usuarios">
-                    <option value="">-- Seleccione Usuario --</option>
+                    <option value="">-- Seleccione el Usuario --</option>
                 </select>
+
                 <span asp-validation-for="idUsuario" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="idCategoria" class="control-label">Categoría</label>
+
                 <select asp-for="idCategoria" class="form-control" asp-items="ViewBag.Categorias">
-                    <option value="">-- Seleccione Categoría --</option>
+                    <option value="">-- Seleccione la Categoría --</option>
                 </select>
+
                 <span asp-validation-for="idCategoria" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Guardar Movimiento" class="btn btn-primary" />
             </div>
+
         </form>
+
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="mt-3">
+    <a asp-action="Index">Volver a la lista</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

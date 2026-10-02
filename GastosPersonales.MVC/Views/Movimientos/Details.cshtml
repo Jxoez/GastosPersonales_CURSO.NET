@@ -1,73 +1,108 @@
 @model GastosPersonales.Modelos.Movimiento
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Movimiento";
 }
 
-<h1>Details</h1>
+<h1>Detalles del Movimiento</h1>
 
-<div>
-    <h4>Movimiento</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.descripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.descripcion)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.monto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.monto)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.fecha)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.fecha)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.tipo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.tipo)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.idUsuario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.idUsuario)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.idCategoria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.idCategoria)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Usuario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Usuario)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-    </dl>
+<h4>Información del Movimiento</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+
+        <dl class="row">
+
+            <dt class="col-sm-4">
+                Descripción
+            </dt>
+
+            <dd class="col-sm-8">
+                @Model.descripcion
+            </dd>
+
+            <dt class="col-sm-4">
+                Monto
+            </dt>
+
+            <dd class="col-sm-8">
+                $ @Model.monto.ToString("F2")
+            </dd>
+
+            <dt class="col-sm-4">
+                Fecha
+            </dt>
+
+            <dd class="col-sm-8">
+                @Model.fecha.ToString("dd/MM/yyyy")
+            </dd>
+
+            <dt class="col-sm-4">
+                Tipo
+            </dt>
+
+            <dd class="col-sm-8">
+                @if (Model.tipo == "Gasto")
+                {
+                    <span class="badge bg-danger">Gasto</span>
+                }
+                else if (Model.tipo == "Ingreso")
+                {
+                    <span class="badge bg-success">Ingreso</span>
+                }
+                else
+                {
+                    @Model.tipo
+                }
+            </dd>
+
+            <dt class="col-sm-4">
+                Usuario
+            </dt>
+
+            <dd class="col-sm-8">
+                @if (Model.Usuario != null)
+                {
+                    @($"{Model.Usuario.nombre} {Model.Usuario.apellido}")
+                }
+                else
+                {
+                    <span class="text-muted">Sin usuario</span>
+                }
+            </dd>
+
+            <dt class="col-sm-4">
+                Categoría
+            </dt>
+
+            <dd class="col-sm-8">
+                @if (Model.Categoria != null)
+                {
+                    @Model.Categoria.nombre
+                }
+                else
+                {
+                    <span class="text-muted">Sin categoría</span>
+                }
+            </dd>
+
+        </dl>
+
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.idMovimiento">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="mt-3">
+
+    <a asp-action="Edit"
+       asp-route-idmovimiento="@Model.idMovimiento"
+       class="btn btn-warning">
+        Editar
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Volver a la lista
+    </a>
+
 </div>

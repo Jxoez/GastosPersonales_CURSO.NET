@@ -1,3 +1,5 @@
+using GastosPersonales.Consumer;
+using GastosPersonales.Modelos;
 using GastosPersonales.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -15,6 +17,23 @@ namespace GastosPersonales.MVC.Controllers
 
         public IActionResult Index()
         {
+            var movimientos = CRUD<Movimiento>.GetAll();
+
+            double ingresos = movimientos
+                .Where(m => m.tipo == "Ingreso")
+                .Sum(m => m.monto);
+
+            double gastos = movimientos
+                .Where(m => m.tipo == "Gasto")
+                .Sum(m => m.monto);
+
+            double balance = ingresos - gastos;
+
+            ViewBag.Ingresos = ingresos;
+            ViewBag.Gastos = gastos;
+            ViewBag.Balance = balance;
+            ViewBag.CantidadMovimientos = movimientos.Count;
+
             return View();
         }
 

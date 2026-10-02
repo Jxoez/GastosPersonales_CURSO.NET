@@ -1,59 +1,240 @@
 @model GastosPersonales.Modelos.Usuario
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Usuario";
 }
 
-<h1>Details</h1>
+<h1>Detalles del Usuario</h1>
 
-<div>
-    <h4>Usuario</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.apellido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.apellido)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.email)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.password)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Presupuestos)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Presupuestos)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Movimientos)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Movimientos)
-        </dd>
-    </dl>
+<h4>Información del Usuario</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+
+        <dl class="row">
+
+            <dt class="col-sm-4">
+                Nombre
+            </dt>
+
+            <dd class="col-sm-8">
+                @Model.nombre
+            </dd>
+
+            <dt class="col-sm-4">
+                Apellido
+            </dt>
+
+            <dd class="col-sm-8">
+                @Model.apellido
+            </dd>
+
+            <dt class="col-sm-4">
+                Correo Electrónico
+            </dt>
+
+            <dd class="col-sm-8">
+                @Model.email
+            </dd>
+
+            <dt class="col-sm-4">
+                Contraseña
+            </dt>
+
+            <dd class="col-sm-8">
+                ••••••••
+            </dd>
+
+        </dl>
+
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.idUsuario">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<hr />
+
+<h5>Movimientos del Usuario</h5>
+
+@if (Model.Movimientos != null && Model.Movimientos.Any())
+{
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Categoría</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var movimiento in Model.Movimientos)
+            {
+                <tr>
+
+                    <td>
+                        @movimiento.descripcion
+                    </td>
+
+                    <td>
+                        $ @movimiento.monto.ToString("F2")
+                    </td>
+
+                    <td>
+                        @movimiento.fecha.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>
+                        @if (movimiento.tipo == "Gasto")
+                        {
+                            <span class="badge bg-danger">Gasto</span>
+                        }
+                        else if (movimiento.tipo == "Ingreso")
+                        {
+                            <span class="badge bg-success">Ingreso</span>
+                        }
+                        else
+                        {
+                            @movimiento.tipo
+                        }
+                    </td>
+
+                    <td>
+                        @if (movimiento.Categoria != null)
+                        {
+                            @movimiento.Categoria.nombre
+                        }
+                        else
+                        {
+                            <span class="text-muted">Sin categoría</span>
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <p class="text-muted">
+        No existen movimientos registrados para este usuario.
+    </p>
+}
+
+<hr />
+
+<h5>Presupuestos del Usuario</h5>
+
+@if (Model.Presupuestos != null && Model.Presupuestos.Any())
+{
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Categoría</th>
+                <th>Mes</th>
+                <th>Año</th>
+                <th>Monto Límite</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var presupuesto in Model.Presupuestos)
+            {
+                <tr>
+
+                    <td>
+                        @if (presupuesto.Categoria != null)
+                        {
+                            @presupuesto.Categoria.nombre
+                        }
+                        else
+                        {
+                            <span class="text-muted">Sin categoría</span>
+                        }
+                    </td>
+
+                    <td>
+                        @switch (presupuesto.mes)
+                        {
+                            case 1:
+                                <span>Enero</span>
+                                break;
+                            case 2:
+                                <span>Febrero</span>
+                                break;
+                            case 3:
+                                <span>Marzo</span>
+                                break;
+                            case 4:
+                                <span>Abril</span>
+                                break;
+                            case 5:
+                                <span>Mayo</span>
+                                break;
+                            case 6:
+                                <span>Junio</span>
+                                break;
+                            case 7:
+                                <span>Julio</span>
+                                break;
+                            case 8:
+                                <span>Agosto</span>
+                                break;
+                            case 9:
+                                <span>Septiembre</span>
+                                break;
+                            case 10:
+                                <span>Octubre</span>
+                                break;
+                            case 11:
+                                <span>Noviembre</span>
+                                break;
+                            case 12:
+                                <span>Diciembre</span>
+                                break;
+                            default:
+                                <span>Desconocido</span>
+                                break;
+                        }
+                    </td>
+
+                    <td>
+                        @presupuesto.anio
+                    </td>
+
+                    <td>
+                        $ @presupuesto.montoLimite.ToString("F2")
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <p class="text-muted">
+        No existen presupuestos registrados para este usuario.
+    </p>
+}
+
+<div class="mt-3">
+
+    <a asp-action="Edit"
+       asp-route-idusuario="@Model.idUsuario"
+       class="btn btn-warning">
+        Editar
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Volver a la lista
+    </a>
+
 </div>

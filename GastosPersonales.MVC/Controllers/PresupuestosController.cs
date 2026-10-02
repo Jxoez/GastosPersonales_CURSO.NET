@@ -8,11 +8,12 @@ public class PresupuestosController : Controller
 {
 
     // GET: PRESUPUESTOS
-    public ActionResult Index()    
+    public IActionResult Index()
     {
         var presupuestos = CRUD<Presupuesto>.GetAll();
         return View(presupuestos);
     }
+
 
     // GET: PRESUPUESTOS/Details/5
     public ActionResult Details(int idpresupuesto)

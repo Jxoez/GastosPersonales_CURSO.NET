@@ -1,71 +1,142 @@
 @model IEnumerable<GastosPersonales.Modelos.Presupuesto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Presupuestos";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Presupuestos</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+    <a asp-action="Create" class="btn btn-primary">
+        Nuevo Presupuesto
+    </a>
+</div>
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.montoLimite)
+                Monto Límite
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.mes)
+                Mes
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.anio)
+                Año
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.idUsuario)
+                Usuario
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.idCategoria)
+                Categoría
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Usuario)
+                Acciones
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th></th>
         </tr>
     </thead>
+
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.montoLimite)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.mes)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.anio)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.idUsuario)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.idCategoria)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Categoria)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-idpresupuesto="@item.idPresupuesto">Edit</a> |
-                <a asp-action="Details" asp-route-idpresupuesto="@item.idPresupuesto">Details</a> |
-                <a asp-action="Delete" asp-route-idpresupuesto="@item.idPresupuesto">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    $ @item.montoLimite
+                </td>
+
+                <td>
+                    @switch (item.mes)
+                    {
+                        case 1:
+                            <span>Enero</span>
+                            break;
+                        case 2:
+                            <span>Febrero</span>
+                            break;
+                        case 3:
+                            <span>Marzo</span>
+                            break;
+                        case 4:
+                            <span>Abril</span>
+                            break;
+                        case 5:
+                            <span>Mayo</span>
+                            break;
+                        case 6:
+                            <span>Junio</span>
+                            break;
+                        case 7:
+                            <span>Julio</span>
+                            break;
+                        case 8:
+                            <span>Agosto</span>
+                            break;
+                        case 9:
+                            <span>Septiembre</span>
+                            break;
+                        case 10:
+                            <span>Octubre</span>
+                            break;
+                        case 11:
+                            <span>Noviembre</span>
+                            break;
+                        case 12:
+                            <span>Diciembre</span>
+                            break;
+                        default:
+                            <span>Desconocido</span>
+                            break;
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.anio)
+                </td>
+
+                <td>
+                    @if (item.Usuario != null)
+                    {
+                        @($"{item.Usuario.nombre} {item.Usuario.apellido}")
+                    }
+                    else
+                    {
+                        <span class="text-muted">Sin usuario</span>
+                    }
+                </td>
+
+                <td>
+                    @if (item.Categoria != null)
+                    {
+                        @item.Categoria.nombre
+                    }
+                    else
+                    {
+                        <span class="text-muted">Sin categoría</span>
+                    }
+                </td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-idpresupuesto="@item.idPresupuesto"
+                       class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <a asp-action="Details"
+                       asp-route-idpresupuesto="@item.idPresupuesto"
+                       class="btn btn-info btn-sm">
+                        Detalles
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-idpresupuesto="@item.idPresupuesto"
+                       class="btn btn-danger btn-sm">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
+
 </table>
